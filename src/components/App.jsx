@@ -17,7 +17,7 @@ class App extends React.Component {
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <VideoPlayer video={(this.props.video ? this.props.video : {id: {videoId: 'BLANK'}, snippet: {thumbnails: {default: {url: "BLANK"}}, description: "BLANK", title: "BLANK"}})}/>
+            <VideoPlayer video={(this.props.video ? this.props.video : {id: {videoId: 'BLANK'}, snippet: {thumbnails: {default: {url: 'BLANK'}}, description: 'BLANK', title: 'BLANK'}})}/>
           </div>
           <div className="col-md-5">
             <VideoList videos={this.props.videos}/>
