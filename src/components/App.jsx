@@ -12,7 +12,7 @@ var App = (props) => (
     </nav>
     <div className="row">
       <div className="col-md-7">
-        <VideoPlayer />
+        <VideoPlayer video={props.video}/>
       </div>
       <div className="col-md-5">
         <VideoList videos={props.videos}/>
