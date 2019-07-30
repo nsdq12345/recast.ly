@@ -1,16 +1,14 @@
-var VideoListEntry = (props) => {
+import VideoPlayer from './VideoPlayer.js';
 
-  var videoSelect = () => {
-    $('.embed-responsive-item').attr('src', ('https://www.youtube.com/embed/' + props.video.id.videoId));
-  };
+var VideoListEntry = (props) => {
 
   return (
     <div className="video-list-entry media">
       <div className="media-left media-middle">
-        <img className="media-object" src={props.video.snippet.thumbnails.default.url} alt="" onClick={videoSelect}/>
+        <img className="media-object" src={props.video.snippet.thumbnails.default.url} alt="" onClick={() => {props.click(props.video);}}/>
       </div>
       <div className="media-body">
-        <div className="video-list-entry-title" onClick={videoSelect}>{props.video.snippet.title}</div>
+        <div className="video-list-entry-title" onClick={() => {props.click(props.video);}}>{props.video.snippet.title}</div>
         <div className="video-list-entry-detail">{props.video.snippet.description}</div>
       </div>
     </div>
