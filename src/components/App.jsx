@@ -9,28 +9,50 @@ class App extends React.Component {
     super (props);
 
     this.state = {
-      currentVideo : {id: {videoId: '4ZAEBxGipoA'}, snippet: {thumbnails: {default: {url: 'https://i.ytimg.com/vi/4ZAEBxGipoA/default.jpg'}}, description: 'My website - https://www.thenewboston.com/videos.php Have questions about the tutorial or React? Ask them here ...', title: 'XReact JS Tutorial for Beginners - 1 - Introduction'}},
-      currentVideoList : [{id: {videoId: ''}, snippet: {thumbnails: {default: {url: ''}}, description: '', title: ''}}]
+      currentVideo: {id: {videoId: ''}, snippet: {thumbnails: {default: {url: ''}}, description: '', title: ''}},
+      currentVideoList: [{id: {videoId: ''}, snippet: {thumbnails: {default: {url: ''}}, description: '', title: ''}}],
+      searchInput: ''
     };
 
     this.setVideo = this.setVideo.bind(this);
-    this.setInitialVideoList = this.setInitialVideoList.bind(this);
+    this.setVideoList = this.setVideoList.bind(this);
+    this.setSearchInput = this.setSearchInput.bind(this);
+    this.setSearchUpdate = this.setSearchUpdate.bind(this);
+    this.setSearchUpdate2 = this.setSearchUpdate2.bind(this);
   }
 
   componentDidMount() {
-    this.props.searchYouTube({query: 'react tutorial', key: YOUTUBE_API_KEY, max: 5}, this.setInitialVideoList);
+    this.props.searchYouTube({query: 'react tutorial', key: YOUTUBE_API_KEY, max: 5}, this.setVideoList);
   }
 
-  setInitialVideoList(searchResults) {
+  setVideoList(searchResults) {
     this.setState({
-      currentVideo : searchResults[0],
-      currentVideoList : searchResults
+      currentVideo: searchResults[0],
+      currentVideoList: searchResults
     });
+  }
+
+  setSearchUpdate() {
+    this.props.searchYouTube({query: this.state.searchInput, key: YOUTUBE_API_KEY, max: 5}, this.setSearchUpdate2);
+  }
+
+  setSearchUpdate2(searchResults) {
+    this.setState({
+      currentVideoList: searchResults
+    });
+  }
+
+  setSearchInput(e) {
+    this.setState({
+      searchInput: e.target.value
+    });
+
+    this.props.searchYouTube({query: this.state.searchInput, key: YOUTUBE_API_KEY, max: 5}, this.setSearchUpdate2);
   }
 
   setVideo(e) {
     this.setState({
-      currentVideo : e
+      currentVideo: e
     });
   }
 
@@ -39,12 +61,11 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search />
+            <Search click={this.setSearchUpdate} inputListen={this.setSearchInput}/>
           </div>
         </nav>
         <div className="row">
           <div className="col-md-7">
-            {/* <VideoPlayer video={this.state.currentVideo}/> */}
             <VideoPlayer video={this.state.currentVideo}/>
           </div>
           <div className="col-md-5">

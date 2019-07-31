@@ -67,7 +67,6 @@ describe('App', function() {
       expect(searchYouTubeStub.called).to.be.true;
 
       var videoEntryTitleElements = scryRenderedDOMComponentsWithClass(app, 'video-list-entry-title');
-
       videoEntryTitleElements.forEach((videoEntryTitle, i) =>
         expect(videoEntryTitle.innerHTML).to.equal(fakeVideoData[i].snippet.title)
       );
