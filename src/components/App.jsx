@@ -19,6 +19,30 @@ class App extends React.Component {
     this.setSearchInput = this.setSearchInput.bind(this);
     this.setSearchUpdate = this.setSearchUpdate.bind(this);
     this.setSearchUpdate2 = this.setSearchUpdate2.bind(this);
+    this.searchYT = this.props.searchYouTube.bind(this);
+  }
+
+  debounce(func, wait, immediate) {
+    var timeout;
+    console.log('func0', this);
+    var newFunc = function() {
+      console.log('func:', func);
+      var context = this, args = arguments;
+      var later = function() {
+        timeout = null;
+        console.log('hit?', this);
+        if (!immediate) {func.apply(context, args);}
+      };
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) {
+        console.log('hit');
+        func.apply(context, args);
+      }
+    };
+    console.log('func1', this);
+    return newFunc.call(this);
   }
 
   componentDidMount() {
@@ -46,8 +70,9 @@ class App extends React.Component {
     this.setState({
       searchInput: e.target.value
     });
+    var currentFunction = function() {this.props.searchYouTube.bind(this);}.bind(this);
+    this.debounce(currentFunction, 5000);
 
-    this.props.searchYouTube({query: this.state.searchInput, key: YOUTUBE_API_KEY, max: 5}, this.setSearchUpdate2);
   }
 
   setVideo(e) {
