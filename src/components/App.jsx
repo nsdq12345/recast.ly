@@ -70,9 +70,9 @@ class App extends React.Component {
     this.setState({
       searchInput: e.target.value
     });
-    var currentFunction = function() {this.props.searchYouTube.bind(this);}.bind(this);
-    this.debounce(currentFunction, 5000);
-
+    // var currentFunction = function() {this.props.searchYouTube.bind(this);}.bind(this);
+    // this.debounce(currentFunction, 5000);
+    this.props.searchYouTube({query: this.state.searchInput, key: YOUTUBE_API_KEY, max: 5}, this.setSearchUpdate2);
   }
 
   setVideo(e) {
